@@ -1,0 +1,89 @@
+# gra--papier-kamien-nozyce
+import random
+from time import sleep
+class User_choice:
+    def __init__(self, number=0):
+        self.number = number
+
+class ChoiceInfo(User_choice):
+    def info(self):
+        if self.number == 1:
+            print('Wybrałeś papier')
+        elif self.number == 2:
+            print('Wybrałeś kamien')
+        elif self.number == 3:
+            print('Wybrałeś nozyce')
+        else:
+            print('Wybrałeś zły numer proszę spróbuj ponownie')
+            super().__init__()
+
+
+class Fight(ChoiceInfo):
+    pc_point = 0
+    user_point = 0
+
+
+    def drawing(self, draw=0):
+        self.number = int(input("""Proszę o wybór oręża >>>
+        1- Papier
+        2 - Kamien
+        3 - Nozyce
+        """))
+        super().info()
+        self.draw = draw
+        self.draw = random.randrange(1,4)
+        if self.draw == 1:
+            print('Komputer pokazuje papier')
+        elif self.draw == 2:
+            print('Komputer pokazuje kamień')
+        elif self.draw == 3:
+            print('Komputer pokazuje nożyce')
+        # tutaj nalezy poinformowac uzytkownika o dokonanym wyborze
+
+        if self.draw == self.number:
+            print('Remis!')
+        elif self.draw == 1 and self.number == 2:
+            print('Wygrywa komputer!')
+            Fight.pc_point += 1
+        elif self.draw == 1 and self.number == 3:
+            print('Wygyrywa uzytkownik ')
+            Fight.user_point += 1
+        elif self.draw == 2 and self.number == 1:
+            print('Wygyrywa uzytkownik')
+            Fight.user_point += 1
+        elif self.draw == 2 and self.number == 3:
+            print('Wygyrywa komputer')
+            Fight.pc_point += 1
+        elif self.draw == 3 and self.number == 1:
+            print('Wygyrywa komputer ')
+            Fight.pc_point += 1
+        elif self.draw == 3 and self.number == 2:
+            print('Wygyrywa uzytkownik')
+            Fight.user_point += 1
+
+    def numbers(self, round_number = 5):
+        self.round_number = round_number
+        i = 0
+        while i <= self.round_number:
+            Fight.drawing(self)
+            sleep(1)
+            i += 1
+        print()
+        print('Punkty, które zdobył komputer: ', Fight.pc_point)
+        print()
+        print('Punkty, które zdobył użytkownik: ', Fight.user_point)
+
+    def closing(self):
+        Fight.numbers(self)
+        if Fight.pc_point < Fight.user_point:
+            print('Koniec walki wygrał użytkownik !')
+        elif Fight.pc_point > Fight.user_point:
+            print('Koniec walki wygrał komputer !')
+        else:
+            print('Mamy remis!')
+
+
+
+test = Fight()
+
+test.closing()
